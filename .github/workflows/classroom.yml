@@ -1,6 +1,6 @@
 name: Autograding Tests
 'on':
-- push
+- workflow_dispatch
 - repository_dispatch
 permissions:
   checks: write
@@ -13,18 +13,18 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    - name: running py_test
-      id: running-py_test
+    - name: pytest test
+      id: pytest-test
       uses: classroom-resources/autograding-command-grader@v1
       with:
-        test-name: running py_test
-        setup-command: ''
-        command: pytest 01/
+        test-name: pytest test
+        setup-command: pip install pytest
+        command: pytest 01
         timeout: 10
         max-score: 100
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
-        RUNNING-PY_TEST_RESULTS: "${{steps.running-py_test.outputs.result}}"
+        PYTEST-TEST_RESULTS: "${{steps.pytest-test.outputs.result}}"
       with:
-        runners: running-py_test
+        runners: pytest-test
