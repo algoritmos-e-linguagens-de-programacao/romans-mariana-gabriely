@@ -21,6 +21,7 @@ jobs:
         setup-command: pip install pytest
         command: pytest 01
         timeout: 10
+        max-score: 100
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
